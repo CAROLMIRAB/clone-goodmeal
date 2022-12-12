@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap --use-workspaces",
+    "start": "lerna run start --parallel",
+    "build": "lerna run build --parallel"
+  },
+  "devDependencies": {
+    "lerna": "^6.1.0"
+  },
+  "dependencies": {
+    "vue": "^3.2.45"
+  }
+}
