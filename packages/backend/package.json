@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "start": "php artisan serve"
+        "start": "php artisan serve --port=8080"
     },
     "devDependencies": {
         "axios": "^1.1.2",
@@ -12,5 +12,8 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "vue": "^3.2.45"
     }
 }

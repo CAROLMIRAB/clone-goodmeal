@@ -1,0 +1,100 @@
+version: '1.0'
+
+services:
+  shell:
+    build: 
+      context: .
+      target: base
+
+  goodapi:
+    build:
+      target: goodapi
+    extends:
+      file: ./docker-compose.yml
+      service: shell
+    tty: true
+    stdin_open: true
+    container_name: goodapi
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    volumes:
+      - ./packages/api:/var/www/packages/api
+    ports: 
+      - 8080:80 
+    links:
+      - mysql
+      - goodbackend
+    depends_on:
+      - shell
+  
+    networks:
+      customnetwork:
+        ipv4_address: 172.20.0.10
+
+  goodbackend:
+    build: 
+      target: goodbackend
+    tty: true
+    stdin_open: true
+    container_name: goodbackend
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    volumes:
+      - ./packages/backend:/var/www/packages/backend
+    extends:
+      file: ./docker-compose.yml
+      service: shell
+    ports: 
+      - 8008:80
+    links:
+      - mysql
+    depends_on:
+      - shell
+    networks:
+      customnetwork:
+        ipv4_address: 172.20.0.11  
+  
+  goodfrontend:
+    build: 
+      target: goodfrontend
+    tty: true
+    stdin_open: true
+    container_name: goodfrontend
+    volumes:
+      - ./packages/frontend:/var/www/packages/frontend
+    ports: 
+      - 3003:3003
+    extends:
+      file: ./docker-compose.yml
+      service: shell
+    depends_on:
+      - shell
+    networks:
+      customnetwork:
+        ipv4_address: 172.20.0.12  
+
+
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=goodmeal
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    networks:
+      - customnetwork 
+
+networks:
+  customnetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+
+
+
+

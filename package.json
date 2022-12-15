@@ -1,18 +1,17 @@
 {
-  "name": "root",
+  "name": "@mono/root",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {"packages": [
+       "packages/**"
+       ]},
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
     "start": "lerna run start --parallel",
-    "build": "lerna run build --parallel"
+    "build": "lerna run build --parallel",
+    "lerna-dockerize": "lerna-dockerize"
   },
   "devDependencies": {
-    "lerna": "^6.1.0"
-  },
-  "dependencies": {
-    "vue": "^3.2.45"
+    "lerna": "^6.1.0",
+    "lerna-dockerize": "^1.0.4"
   }
 }
