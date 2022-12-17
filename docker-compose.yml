@@ -1,36 +1,6 @@
 version: '1.0'
 
 services:
-  shell:
-    build: 
-      context: .
-      target: base
-
-  goodapi:
-    build:
-      target: goodapi
-    extends:
-      file: ./docker-compose.yml
-      service: shell
-    tty: true
-    stdin_open: true
-    container_name: goodapi
-    environment:
-      - APACHE_RUN_USER=#1000
-      - APACHE_RUN_GROUP=#1000
-    volumes:
-      - ./packages/api:/var/www/packages/api
-    ports: 
-      - 8080:80 
-    links:
-      - mysql
-      - goodbackend
-    depends_on:
-      - shell
-  
-    networks:
-      customnetwork:
-        ipv4_address: 172.20.0.10
 
   goodbackend:
     build: 
@@ -42,19 +12,33 @@ services:
       - APACHE_RUN_USER=#1000
       - APACHE_RUN_GROUP=#1000
     volumes:
-      - ./packages/backend:/var/www/packages/backend
-    extends:
-      file: ./docker-compose.yml
-      service: shell
+      - ./packages/backend:/var/www//backend
     ports: 
-      - 8008:80
+      - 8080:80
     links:
       - mysql
-    depends_on:
-      - shell
     networks:
-      customnetwork:
+      gmnetwork:
         ipv4_address: 172.20.0.11  
+  
+  goodapi:
+    build:
+      target: goodapi
+    tty: true
+    stdin_open: true
+    container_name: goodapi
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    volumes:
+      - ./packages/api:/var/www/api
+    ports: 
+      - 8000:80
+    links:
+      - mysql
+    networks:
+      gmnetwork:
+        ipv4_address: 172.20.0.10
   
   goodfrontend:
     build: 
@@ -63,18 +47,13 @@ services:
     stdin_open: true
     container_name: goodfrontend
     volumes:
-      - ./packages/frontend:/var/www/packages/frontend
+      - ./packages/frontend:/usr/src/frontend 
     ports: 
       - 3003:3003
-    extends:
-      file: ./docker-compose.yml
-      service: shell
-    depends_on:
-      - shell
     networks:
-      customnetwork:
+      gmnetwork:
         ipv4_address: 172.20.0.12  
-
+    
 
   mysql:
     image: mysql
@@ -85,10 +64,10 @@ services:
     ports:
       - '3306:3306'
     networks:
-      - customnetwork 
+      - gmnetwork
 
 networks:
-  customnetwork:
+  gmnetwork:
     driver: bridge
     ipam:
       config:

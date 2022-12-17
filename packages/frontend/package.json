@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "yarn serve",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 3003",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

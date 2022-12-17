@@ -1,64 +1,109 @@
 
-FROM ubuntu/apache2 as base
-RUN apt-get update
-RUN apt-get install -y  software-properties-common  \ 
-  && add-apt-repository ppa:ondrej/php \ 
-  && apt-get install -y php8.1 php8.1-mysql php8.1-curl libapache2-mod-php8.0 \
-  && apt-get install -y wget  \ 
-  && wget -O composer-setup.php https://getcomposer.org/installer \ 
+
+# backend GOODMEAL
+FROM php:8.1-apache as goodbackend
+
+WORKDIR /var/www/
+
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  libzip-dev \
+  libpng-dev \
+  libjpeg62-turbo-dev \
+  libfreetype6-dev \
+  libonig-dev \
+  locales \
+  zip \
+  jpegoptim optipng pngquant gifsicle \
+  vim \
+  git \
+  curl \
+  wget 
+
+# Instalamos composer
+RUN wget -O composer-setup.php https://getcomposer.org/installer \ 
   && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-COPY ./packages /var/www/packages
 
-RUN apt-get install -y nodejs \ 
-  && apt-get install -y npm
-RUN apt clean 
+COPY ./packages/backend  /var/www/backend
 
-COPY ./package.json ./
-RUN npm cache clean --force
-RUN npm install
-COPY ./lerna.json ./
+WORKDIR /var/www/backend
 
-# API GOODMEAL
-FROM base as goodapi
-WORKDIR /var/www/packages/api
 RUN composer update --no-install --prefer-dist --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
-RUN chmod 777 -R /var/www/packages/api/storage/ \
+
+RUN chmod 777 -R /var/www/backend/storage/ \
   && chown -R www-data:www-data /var/www/  \
   && a2enmod rewrite
-COPY ./packages/api/env.example /var/www/packages/api/.env
-COPY ./packages/api/api.conf /etc/apache2/sites-available/
-RUN a2ensite api.conf && a2dissite 000-default.conf && service apache2 restart
-USER root
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
-EXPOSE 80
 
-# BACKEND GOODMEAL
-FROM base as goodbackend
-WORKDIR /var/www/packages/backend
-RUN composer update --no-install --prefer-dist --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
-RUN chmod 777 -R /var/www/packages/backend/storage/ \
-  && chown -R www-data:www-data /var/www/  \
-  && a2enmod rewrite
-COPY ./packages/backend/env.example /var/www/packages/backend/.env
+COPY ./packages/backend/.env.example /var/www/backend/.env
 COPY ./packages/backend/backend.conf /etc/apache2/sites-available/
 RUN a2ensite backend.conf && a2dissite 000-default.conf && service apache2 restart
 USER root
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
 EXPOSE 80
 
-# CLIENT GOOD MEAL
-FROM base as goodfrontend
-WORKDIR /var/www/packages/frontend
-RUN npm install
+
+FROM php:8.1-apache as goodapi
+
+WORKDIR /var/www/
+
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  libzip-dev \
+  libpng-dev \
+  libjpeg62-turbo-dev \
+  libfreetype6-dev \
+  libonig-dev \
+  locales \
+  zip \
+  jpegoptim optipng pngquant gifsicle \
+  vim \
+  git \
+  curl \
+  wget 
+
+# Instalamos composer
+RUN wget -O composer-setup.php https://getcomposer.org/installer \ 
+  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+COPY ./packages/api  /var/www/api
+
+WORKDIR /var/www/api
+
+RUN composer update --no-install --prefer-dist --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+
+RUN chmod 777 -R /var/www/api/storage/ \
+  && chown -R www-data:www-data /var/www/  \
+  && a2enmod rewrite
+
+COPY ./packages/api/.env.example /var/www/api/.env
+COPY ./packages/api/api.conf /etc/apache2/sites-available/
+RUN a2ensite api.conf && a2dissite 000-default.conf && service apache2 restart
+USER root
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+EXPOSE 80
+
+
+FROM node:14 as goodfrontend
+
+
+WORKDIR /usr/src/app
+
+COPY ./packages/frontend/package*.json  ./
+COPY ./packages/frontend/  ./
+
+RUN npm install \ 
+  && npm install yarn \
+  && npm install -g @vue/cli \
+  && npm install -g @vue/cli-service 
+
 RUN npm cache clean --force
+
 CMD ["npm", "run", "serve"]
 EXPOSE 3003
-
-
-
-
-
-
 
