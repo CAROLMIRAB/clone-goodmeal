@@ -9,11 +9,15 @@ class Product extends Model
 {
     public $timestamps = true;
 
+    protected $table = 'products';
+
     protected $fillable = [
-        'address',
-        'lat',
-        'long',
-        'delivery',
-        'schedule'
+        'name',
+        'description',
+        'image',
+        'price',
+        'discount',
+        'category_id',
+        'store_id'
     ];
 }

@@ -9,6 +9,8 @@ class Order extends Model
 {
     public $timestamps = true;
 
+    protected $table = 'order';
+
     protected $fillable = [
         'orderno',
         'status',

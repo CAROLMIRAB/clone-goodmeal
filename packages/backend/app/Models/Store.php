@@ -9,7 +9,10 @@ class Store extends Model
 {
     public $timestamps = true;
 
+    protected $table = 'stores';
+
     protected $fillable = [
+        'name',
         'address',
         'lat',
         'long',

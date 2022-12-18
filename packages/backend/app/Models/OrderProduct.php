@@ -9,6 +9,8 @@ class OrderProduct extends Model
 {
     public $timestamps = true;
 
+    protected $table = 'order_products';
+
     protected $fillable = [
         'price',
         'discount',
