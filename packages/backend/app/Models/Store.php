@@ -19,4 +19,14 @@ class Store extends Model
         'delivery',
         'schedule'
     ];
+
+    /**
+     * products
+     *
+     * @return void
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

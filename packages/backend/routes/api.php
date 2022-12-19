@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'app'], function () {
+    Route::get('/', 'App\Http\Controllers\StoreController@indexHome');
+    Route::get('/products', 'App\Http\Controllers\StoreController@indexHome');
+});
+
+
 Route::group(['prefix' => 'product'], function () {
     Route::get('/', 'App\Http\Controllers\ProductController@index');
     Route::post('add', 'App\Http\Controllers\ProductController@add');

@@ -101,4 +101,30 @@ class StoreController extends Controller
             'data' => []
         ]);
     }
+
+    /**
+     * index
+     *
+     * @return void
+     */
+    public function indexHome()
+    {
+        $stores = $this->storeRepo->getAllWithProducts();
+        foreach ($stores as $st) {
+            $day = "";
+            $schedule =  json_decode($st->schedule);
+            foreach ($schedule as $key => $item) {
+                if ($key == strtolower(date('l'))) {
+                    $day = $item;
+                }
+            }
+            $st->date = $day;
+            $st->prod_quantity = count($st->products);
+        }
+        return  response()->json([
+            'status' => 200,
+            'message' => "todas las tiendas",
+            'data' => $stores
+        ]);
+    }
 }

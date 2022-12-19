@@ -20,4 +20,9 @@ class Product extends Model
         'category_id',
         'store_id'
     ];
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store');
+    }
 }

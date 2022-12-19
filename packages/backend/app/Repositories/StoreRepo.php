@@ -72,4 +72,16 @@ class StoreRepo
 
     return $store;
   }
+
+  /**
+   * getAll
+   *
+   * @return void
+   */
+  public function getAllWithProducts()
+  {
+    $store = Store::with('products')->get();
+
+    return $store;
+  }
 }

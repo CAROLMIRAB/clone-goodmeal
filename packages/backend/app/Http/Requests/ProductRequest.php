@@ -22,7 +22,8 @@ class ProductRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric',
             'category' => 'required|numeric',
-            'store' => 'required|numeric'
+            'store' => 'required|numeric',
+            'image' => 'required'
         ];
     }
 
@@ -54,7 +55,8 @@ class ProductRequest extends FormRequest
             'description.required' => 'La descripcion es requerida',
             'price.required' => 'El precio es requerido',
             'category.required' => 'La categoria es requerida',
-            'store.required' => 'La tienda es requerida'
+            'store.required' => 'La tienda es requerida',
+            'image.required' => 'La imagen es requerida'
 
         ];
     }
