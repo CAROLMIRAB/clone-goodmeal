@@ -52,7 +52,7 @@ export default {
   },
   created() {
     axios
-      .get('http://localhost:8000/api/app/products')
+      .get('http://localhost:8000/api/app/product')
       .then((response) => {
         this.stores = response.data.data;
       })
