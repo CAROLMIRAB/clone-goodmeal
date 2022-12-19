@@ -1,23 +1,19 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link
-            to="/"
-            class="nav-item nav-link"
-            >Home</router-link
-          >
-          <router-link
-            to="/add"
-            class="nav-item nav-link"
-            >Add Post</router-link
-          >
-        </div>
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container d-flex justify-content-between">
+        <a
+          href="#"
+          class="navbar-brand d-flex align-items-center"
+        >
+          <strong>GoodMeal</strong>
+        </a>
+        <button type="button"><BIconSliders /></button>
       </div>
-    </nav>
-    <br />
-    <router-view></router-view>
+    </div>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
