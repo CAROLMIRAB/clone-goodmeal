@@ -1,11 +1,20 @@
-import AllProducts from './components/AllProducts.vue';
-import AddPost from './components/AddPost.vue';
-import EditPost from './components/EditPost.vue';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-export const routes = [
+import AllStores from '../components/AllStores';
+
+Vue.use(VueRouter);
+
+const routes = [
   {
-    name: 'home',
     path: '/',
+    name: 'home',
     component: AllStores,
   },
 ];
+
+const router = new VueRouter({
+  routes,
+});
+
+export default router;
