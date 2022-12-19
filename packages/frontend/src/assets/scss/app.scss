@@ -57,6 +57,12 @@ body{
   }
 }
 
+.nav-btn{
+  border-radius: 5px;
+  border: none;
+  background: #f8cee8;
+}
+
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
@@ -65,34 +71,3 @@ body{
   border-radius: 0.25rem;
 }
 
-.portlet{
-  width: 500px;
-  background-color: #fff;
-  margin-bottom: 2.2rem;
-
-  .portlet-body{
-    padding: 2.2rem 2.2rem;
-  }
-
-
-  .portlet-head{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    padding: 0;
-    padding: 0 2.2rem;
-    height: 5.1rem;
-    position: relative;
-    border-bottom: 1px solid #ebedf2;
-  }
-}

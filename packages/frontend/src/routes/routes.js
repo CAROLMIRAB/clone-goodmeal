@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AllStores from '../components/AllStores';
+import ProductsStore from '../components/ProductsStore';
 
 const routes = [
   {
     path: '/',
     component: AllStores,
+  },
+
+  {
+    name: 'products',
+    path: '/products',
+    component: ProductsStore,
   },
 ];
 

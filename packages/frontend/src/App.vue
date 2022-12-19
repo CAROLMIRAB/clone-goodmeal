@@ -8,7 +8,12 @@
         >
           <strong>GoodMeal</strong>
         </a>
-        <button type="button"><BIconSliders /></button>
+        <button
+          type="button"
+          class="nav-btn"
+        >
+          <BIconSliders />
+        </button>
       </div>
     </div>
     <div class="container">
