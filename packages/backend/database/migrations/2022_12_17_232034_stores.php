@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lat');
             $table->string('long');
             $table->boolean('delivery');
-            $table->string('schedule');
+            $table->longText('schedule');
             $table->timestamps();
         });
     }

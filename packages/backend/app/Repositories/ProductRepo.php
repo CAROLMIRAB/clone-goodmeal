@@ -69,9 +69,9 @@ class ProductRepo
    *
    * @return void
    */
-  public function getAll()
+  public function getAll($store)
   {
-    $product = Product::all()->toArray();
+    $product = Product::where('store_id', $store)->get();
 
     return $product;
   }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\StoreRepo;
+use App\Http\Requests\StoreRequest;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -41,26 +42,16 @@ class StoreController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function add(Request $request)
+    public function add(StoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'discount' => 'required|numeric',
-            'category' => 'required|numeric',
-            'store' => 'required|numeric'
-        ]);
-
         $name = $request->name;
-        $description = $request->description;
-        $image = $request->image;
-        $price = $request->price;
-        $discount = $request->discount;
-        $category = $request->category;
-        $store = $request->store;
+        $address = $request->address;
+        $lat = $request->lat;
+        $long = $request->long;
+        $delivery = $request->delivery;
+        $schedule = $request->schedule;
 
-        $this->storeRepo->create($name, $description, $image, $price, $discount, $category, $store);
+        $this->storeRepo->create($name, $address, $lat, $long, $delivery, json_encode($schedule));
 
         return  response()->json([
             'status' => 200,
@@ -79,12 +70,11 @@ class StoreController extends Controller
     {
         $data = [
             'name' =>  $request->name,
-            'description' => $request->description,
-            'image' => $request->image,
-            'price' => $request->price,
-            'discount' => $request->discount,
-            'category' => $request->category,
-            'store' => $request->store
+            'address' => $request->address,
+            'lat' => $request->lat,
+            'long' => $request->long,
+            'delivery' => $request->delivery,
+            'schedule' => $request->schedule
         ];
 
         $this->storeRepo->edit($id, $data);

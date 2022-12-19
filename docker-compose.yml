@@ -47,7 +47,7 @@ services:
     stdin_open: true
     container_name: goodfrontend
     volumes:
-      - ./packages/frontend:/usr/src/frontend 
+      - ./packages/frontend:/usr/src/app 
     ports: 
       - 3003:3003
     networks:

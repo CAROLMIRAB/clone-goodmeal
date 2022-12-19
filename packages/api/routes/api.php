@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['prefix' => 'product'], function () {
+    Route::post('/', 'App\Http\Controllers\ApiController@indexProduct');
+    Route::post('add', 'App\Http\Controllers\ApiController@createProduct');
+    Route::post('update/{id}', 'App\Http\Controllers\ApiController@updateProduct');
+    Route::post('delete/{id}', 'App\Http\Controllers\ApiController@deleteProduct');
+});
+
+Route::group(['prefix' => 'store'], function () {
+    Route::post('/', 'App\Http\Controllers\ApiController@indexStore');
+    Route::post('add', 'App\Http\Controllers\ApiController@createStore');
+    Route::post('update/{id}', 'App\Http\Controllers\ApiController@updateStore');
+    Route::post('delete/{id}', 'App\Http\Controllers\ApiController@deleteStore');
 });

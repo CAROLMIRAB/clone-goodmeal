@@ -68,7 +68,7 @@ class StoreRepo
    */
   public function getAll()
   {
-    $store = Store::all()->toArray();
+    $store = Store::all();
 
     return $store;
   }

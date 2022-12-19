@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Repositories\ProductRepo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Validator;
+
 
 class ProductController extends Controller
 {
@@ -29,9 +31,10 @@ class ProductController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepo->getAll();
+        $store = $request->store;
+        $products = $this->productRepo->getAll($store);
         return  response()->json([
             'status' => 200,
             'message' => 'Todos los productos',
@@ -45,17 +48,8 @@ class ProductController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function add(Request $request)
+    public function add(ProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'discount' => 'required|numeric',
-            'category' => 'required|numeric',
-            'store' => 'required|numeric'
-        ]);
-
         $name = $request->name;
         $description = $request->description;
         $image = $request->image;

@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'product'], function () {
-    Route::post('index', 'ProductController@index');
-    Route::get('add', 'ProductController@add');
-    Route::post('update/{id}', 'ProductController@update');
-    Route::delete('delete/{id}', 'ProductController@delete');
+    Route::get('/', 'App\Http\Controllers\ProductController@index');
+    Route::post('add', 'App\Http\Controllers\ProductController@add');
+    Route::post('update/{id}', 'App\Http\Controllers\ProductController@update');
+    Route::delete('delete/{id}', 'App\Http\Controllers\ProductController@delete');
 });
 
 Route::group(['prefix' => 'store'], function () {
-    Route::post('index', 'StoreController@index');
-    Route::get('add', 'StoreController@add');
-    Route::post('update/{id}', 'StoreController@update');
-    Route::delete('delete/{id}', 'StoreController@delete');
+    Route::get('/', 'App\Http\Controllers\StoreController@index');
+    Route::post('add', 'App\Http\Controllers\StoreController@add');
+    Route::post('update/{id}', 'App\Http\Controllers\StoreController@update');
+    Route::delete('delete/{id}', 'App\Http\Controllers\StoreController@delete');
 });
