@@ -40,7 +40,6 @@ COPY ./packages/backend/.env.example /var/www/backend/.env
 COPY ./packages/backend/backend.conf /etc/apache2/sites-available/
 RUN a2ensite backend.conf && a2dissite 000-default.conf && service apache2 restart
 
-RUN php artisan log-viewer:publish
 USER root
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
@@ -86,7 +85,6 @@ COPY ./packages/api/.env.example /var/www/api/.env
 COPY ./packages/api/api.conf /etc/apache2/sites-available/
 RUN a2ensite api.conf && a2dissite 000-default.conf && service apache2 restart
 
-RUN php artisan log-viewer:publish
 USER root
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
