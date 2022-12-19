@@ -11,8 +11,8 @@
 - [Vue]: Version 3
 
 3. [Installation](#installation)
-   Para ejecutar el docker file es necesario ejecutar docker compose up -d para levantar los dockers
-   para crear la base de datos es necesario ejecutar php artisan migrate en el contenedor de goodmeal-api
+   Para ejecutar el docker file es necesario ejecutar "docker compose up -d" para levantar los dockers
+   para crear la base de datos es necesario ejecutar "php artisan migrate" en el contenedor de goodmeal-backend
 4. [Congrats](#congrats)
    El trabajo no está completo pero agradezco la oportunidad no tuve el tiempo suficiente.
 
